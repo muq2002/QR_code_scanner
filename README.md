@@ -1,16 +1,4 @@
-# qrcodescanner
+# Mobile QR Scanner for Patient X-rays
+Welcome to our QR Scanner app for accessing patient X-ray images! This mobile application provides a quick and efficient way to view patients' X-ray images by scanning QR codes associated with their medical records. Once you scan a QR code, the app securely fetches and displays the patient's X-ray image, allowing healthcare professionals to view and assess the images right from their mobile devices.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The app features a user-friendly interface, ensuring that you can easily scan QR codes and navigate through images. Security and privacy are our top priorities, so the app uses encrypted connections and follows HIPAA guidelines to protect patient data. Start using the app today to streamline your X-ray image access and improve patient care.
