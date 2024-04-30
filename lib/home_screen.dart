@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -27,20 +26,29 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home Screen')),
+      appBar: AppBar(
+        title: Text('Home Screen'),
+        centerTitle: true,
+      ),
       body: Column(
         children: [
           Expanded(
-            flex: 1,
             child: Center(
               child: ElevatedButton(
                 onPressed: startScanner,
-                child: Text('Scan QR Code'),
+                child: Text('Scan QR Code'
+                , style: TextStyle(
+                    color: Colors.white
+                  ),),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  primary: Colors.blueAccent,
+                ),
               ),
             ),
           ),
           Expanded(
-            flex: scannerActive ? 5 : 0,
+            flex: scannerActive ? 6 : 0,
             child: scannerActive
                 ? QRView(
               key: qrKey,
@@ -51,7 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
           if (result != null)
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text('Barcode Type: ${result!.format}\nData: ${result!.code}'),
+              child: Text(
+                'Barcode Type: ${result!.format}\nData: ${result!.code}',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
         ],
       ),
@@ -65,8 +76,14 @@ class _HomeScreenState extends State<HomeScreen> {
         result = scanData;
       });
       if (result != null) {
-        // Forward the scanned URL to UrlScreen
-        Navigator.pushNamed(context, '/url', arguments: result!.code);
+        setState(() {
+          scannerActive = false;
+          // // End the scanner immediately
+          controller?.pauseCamera();
+        });
+
+        Navigator.pushNamed(context, '/patient', arguments: result!.code);
+
       }
     });
   }
@@ -74,17 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void startScanner() {
     setState(() {
       scannerActive = true;
+      // Start the scanner immediately
+      controller?.resumeCamera();
     });
-  }
-
-  void _launchURL(String? url) async {
-    if (url != null && await canLaunch(url)) {
-      await launch(url);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not launch URL')),
-      );
-    }
   }
 
   @override
